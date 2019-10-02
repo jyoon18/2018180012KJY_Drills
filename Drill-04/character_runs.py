@@ -6,6 +6,7 @@ character = load_image('animation_sheet.png')
 x = 0
 y=0
 frame=0
+
 while True:
     while(x<800):
         clear_canvas()
