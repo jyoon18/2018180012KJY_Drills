@@ -14,7 +14,7 @@ while True:
         character.clip_draw(frame*100,100,100,100,x,90)
         update_canvas()
         frame = (frame + 1) % 8
-        x+=5
+        x+=4
         delay(0.01)
         get_events()
 
@@ -25,7 +25,7 @@ while True:
         character.clip_draw(frame * 100, 0, 100, 100, x, 90)
         update_canvas()
         frame = (frame + 1) % 8
-        x -= 5
+        x -= 4
         delay(0.01)
         get_events()
 
