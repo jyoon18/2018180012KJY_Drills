@@ -33,7 +33,8 @@ x3, y3 = KPU_WIDTH // 2, KPU_HEIGHT // 2
 d=3
 x2=x3
 y2=y3
-#
+##
+
 frame = 0
 hide_cursor()
 
