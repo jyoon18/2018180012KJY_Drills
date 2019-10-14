@@ -37,7 +37,7 @@ class sball:
             self.image.draw(self.x, 60)
         else:
             self.image.draw(self.x, self.y)
-
+#
 class bball:
     def __init__(self):
         self.x, self.y = random.randint(100, 700), 599
