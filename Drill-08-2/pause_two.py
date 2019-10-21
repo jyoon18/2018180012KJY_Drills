@@ -15,7 +15,7 @@ class pause_start:
     def draw(self):
         self.image.draw(400, 300, 300, 300)
 
-
+#
 def enter():
     global pause
     pause = pause_start()
