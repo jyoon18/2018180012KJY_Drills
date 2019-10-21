@@ -7,7 +7,8 @@ class pause_started:
         self.image = load_image('pause.png')
 
     def update(self):
-        delay(0.01)
+
+        delay(0.1)
         pass
 
     def draw(self):
@@ -42,4 +43,7 @@ def handle_events():
     for event in events:
         if event.type == SDL_KEYDOWN and event.key == SDLK_p:
             game_framework.pop_state()
+
+def pause():
+    pass
 
