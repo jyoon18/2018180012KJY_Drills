@@ -7,8 +7,7 @@ class pause_started:
         self.image = load_image('pause.png')
 
     def update(self):
-
-        delay(0.1)
+        delay(0.02)
         pass
 
     def draw(self):
@@ -22,7 +21,7 @@ def enter():
 
 def exit():
     global pause
-    del (pause)
+    del pause
 
 
 def update():

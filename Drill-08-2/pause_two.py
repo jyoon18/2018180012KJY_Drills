@@ -6,11 +6,10 @@ import main_state
 class pause_start:
     def __init__(self):
         self.image = load_image('pause.png')
-        self.speed = 0
+
 
     def update(self):
-        self.speed = 1 - self.speed
-        delay(0.1)
+        delay(0.09)
         pass
 
     def draw(self):
@@ -24,7 +23,7 @@ def enter():
 
 def exit():
     global pause
-    del (pause)
+    del pause
 
 
 def update():
