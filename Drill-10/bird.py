@@ -15,14 +15,14 @@ RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)           # pixel / sec => 초
 
 # Boy Action Speed
 # fill expressions correctly
-TIME_PER_ACTION = 2.0
+TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 0.5 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 14
 
 class Bird:
 
     def __init__(self):
-        self.x, self.y = 1600 // 2, 150
+        self.x, self.y = 1600 // 2, 300
         self.image = load_image('bird_animation.png')
         self.font = load_font('ENCR10B.TTF', 16)
         self.dir = 1
@@ -43,7 +43,7 @@ class Bird:
             self.dir = -1
 
         self.frame_time = (self.frame_time + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 14
-
+        self.framex = int(self.frame_time) % 5
         if int(self.frame_time) % 14 == 10:
             self.framey = 0
         elif int(self.frame_time) % 14 == 5:
@@ -55,10 +55,10 @@ class Bird:
 
     def draw(self):
         if self.dir == 1:
-            self.image.clip_draw(int(self.framex) * 183, int(self.framey) * 168, 183, 168, self.x, self.y, 183, 168)
+            self.image.clip_draw(int(self.framex) * 183, int(self.framey) * 168, 180, 168, self.x, self.y, 180, 165)
 
         else:
-            self.image.clip_composite_draw(int(self.framex) * 183, int(self.framey) * 168, 183, 168, 0.0, 'h', self.x, self.y, 183, 168)
+            self.image.clip_composite_draw(int(self.framex) * 183, int(self.framey) * 168, 180, 168, 0.0, 'h', self.x, self.y, 180, 165)
 
 
 
