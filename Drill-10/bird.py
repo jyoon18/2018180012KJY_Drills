@@ -34,7 +34,7 @@ class Bird:
 
     def update(self):
         self.x += self.velocity * game_framework.frame_time
-        if self.x <= 150:
+        if self.x <= 90:
             self.dir = 1
             self.velocity = RUN_SPEED_PPS
 
