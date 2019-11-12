@@ -15,14 +15,14 @@ RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)           # pixel / sec => 초
 
 # Boy Action Speed
 # fill expressions correctly
-TIME_PER_ACTION = 0.5
-ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+TIME_PER_ACTION = 1.0
+ACTION_PER_TIME = 0.5 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 14
 
 class Bird:
 
     def __init__(self):
-        self.x, self.y = 1600 // 2, 90
+        self.x, self.y = 1600 // 2, 150
         self.image = load_image('bird_animation.png')
         self.font = load_font('ENCR10B.TTF', 16)
         self.dir = 1
@@ -33,25 +33,30 @@ class Bird:
         self.current_time = time.time()
 
     def update(self):
-        self.frame_time = (self.frame_time + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 14
         self.x += self.velocity * game_framework.frame_time
-        if dir == -1:
-            self.velocity = -RUN_SPEED_PPS
-            if self.x < 50:
-                self.dir = 1
-
-        elif dir == 1:
+        if self.x <= 150:
+            self.dir = 1
             self.velocity = RUN_SPEED_PPS
-            if self.x > 1400:
-                self.dir = -1
 
-        if self.frame_time % 14
+        if self.x >= 1500:
+            self.velocity = -RUN_SPEED_PPS
+            self.dir = -1
+
+        self.frame_time = (self.frame_time + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 14
+
+        if int(self.frame_time) % 14 == 10:
+            self.framey = 0
+        elif int(self.frame_time) % 14 == 5:
+            self.framey = 1
+        elif int(self.frame_time) % 14 == 0:
+            self.framey = 2
 
 
 
     def draw(self):
         if self.dir == 1:
             self.image.clip_draw(self.framex * 183, self.framey * 168, 168, 183, self.x, self.y)
+
         else:
             self.image.clip_composite_draw(int(self.framex) * 183, self.framey * 168, 180, 166, 0.0, 'h', self.x, self.y, 200, 200)
 
