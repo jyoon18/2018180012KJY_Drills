@@ -48,6 +48,7 @@ class Bird:
             self.framey = 0
         elif int(self.frame_time) % 14 == 5:
             self.framey = 1
+
         elif int(self.frame_time) % 14 == 0:
             self.framey = 2
 
