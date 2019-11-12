@@ -36,13 +36,13 @@ class Bird:
         self.x += self.velocity * game_framework.frame_time
         if dir == -1:
             self.velocity = -RUN_SPEED_PPS
-            if self.x > 50
+            if self.x < 50:
+                self.dir = 1
 
         elif dir == 1:
             self.velocity = RUN_SPEED_PPS
-            self.framey += 1
-
-
+            if self.x > 1400:
+                self.dir = -1
 
 
 
