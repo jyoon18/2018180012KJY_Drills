@@ -15,7 +15,7 @@ RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)           # pixel / sec => 초
 
 # Boy Action Speed
 # fill expressions correctly
-TIME_PER_ACTION = 1.0
+TIME_PER_ACTION = 2.0
 ACTION_PER_TIME = 0.5 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 14
 
@@ -55,10 +55,10 @@ class Bird:
 
     def draw(self):
         if self.dir == 1:
-            self.image.clip_draw(self.framex * 183, self.framey * 168, 168, 183, self.x, self.y)
+            self.image.clip_draw(int(self.framex) * 183, int(self.framey) * 168, 183, 168, self.x, self.y, 183, 168)
 
         else:
-            self.image.clip_composite_draw(int(self.framex) * 183, self.framey * 168, 180, 166, 0.0, 'h', self.x, self.y, 200, 200)
+            self.image.clip_composite_draw(int(self.framex) * 183, int(self.framey) * 168, 183, 168, 0.0, 'h', self.x, self.y, 183, 168)
 
 
 
