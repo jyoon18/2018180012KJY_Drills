@@ -25,26 +25,32 @@ class Bird:
         self.x, self.y = 1600 // 2, 90
         self.image = load_image('bird_animation.png')
         self.font = load_font('ENCR10B.TTF', 16)
-        self.dir = -1
+        self.dir = 1
         self.velocity = RUN_SPEED_PPS
         self.framex = 0
         self.framey = 0
+        self.frame_time = 0
         self.current_time = time.time()
 
     def update(self):
-        self.framex = (self.framex * ACTION_PER_TIME * game_framework.frame_time) % 4
         self.x += self.velocity * game_framework.frame_time
         if dir == -1:
             self.velocity = -RUN_SPEED_PPS
+            if self.x > 50
 
         elif dir == 1:
             self.velocity = RUN_SPEED_PPS
+            self.framey += 1
+
+
+
+
 
     def draw(self):
-        if self.dir == -1:
+        if self.dir == 1:
             self.image.clip_draw(self.framex * 183, self.framey * 168, 168, 183, self.x, self.y)
         else:
-            self.image.clip_composite_draw(self.framex * 183, 168, 168, 100, -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
+            self.image.clip_composite_draw(self.framex * 183, self.framey * 168, 180, 166, 0.0, 'h', self.x, self.y, 200, 200)
 
 
 
