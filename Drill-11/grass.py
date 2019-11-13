@@ -38,4 +38,4 @@ class Brick:
         draw_rectangle(*self.get_bb())
 
     def get_bb(self):
-        return self.x - 90, self.y + 20, self.x + 90, self.y + 20
+        return self.x - 90, self.y -  20, self.x + 90, self.y + 20
