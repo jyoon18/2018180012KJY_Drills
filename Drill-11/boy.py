@@ -31,6 +31,7 @@ key_event_table = {
 
 
 # Boy States
+check_jump = False
 
 class IdleState:
 
@@ -48,6 +49,8 @@ class IdleState:
 
     @staticmethod
     def exit(boy, event):
+        if event == SPACE:
+            boy.jumping()
         pass
 
     @staticmethod
@@ -140,7 +143,14 @@ class JumpState:
     @staticmethod
     def do(boy):
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+
         boy.x += boy.velocity * game_framework.frame_time
+        if boy.y > 200:
+            boy.jump_velocity = -1
+        elif boy.y < 0:
+            boy.jump_velocity = 1
+        boy.y += boy.jump_velocity
+
 
 
         print(boy.y, " ", boy.jump_velocity, " ", game_framework.frame_time * boy.jump_velocity+10)
@@ -152,7 +162,7 @@ class JumpState:
             boy.image.clip_draw(int(boy.frame) * 100, 100, 100, 100, boy.x, boy.y)
         else:
             boy.image.clip_draw(int(boy.frame) * 100, 0, 100, 100, boy.x, boy.y)
-
+    check_jump = True
 
 next_state_table = {
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, SLEEP_TIMER: SleepState, SPACE: JumpState},
@@ -173,7 +183,7 @@ class Boy:
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter(self, None)
-        self.jump_velocity = 5
+        self.jump_velocity = 1
 
     def get_bb(self):
         return self.x - 50, self.y - 50, self.x + 50, self.y + 50
@@ -189,14 +199,21 @@ class Boy:
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
 
+        if self.y > 200:
+            self.jump_velocity = -1
+        elif self.y < 0:
+            self.jump_velocity = 1
+
     def draw(self):
         self.cur_state.draw(self)
         self.font.draw(self.x - 60, self.y + 50, '(Time: %3.2f)' % get_time(), (255, 255, 0))
         draw_rectangle(*self.get_bb())
-
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
 
+    def jumping(self):
+        self.x += self.velocity * game_framework.frame_time
+        self.y += self.jump_velocity
