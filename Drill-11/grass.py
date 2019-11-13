@@ -21,7 +21,7 @@ class Grass:
 class Brick:
 
     def __init__(self):
-        self.x, self.y = 1050, 300
+        self.x, self.y = 1050, 200
         self.image = load_image('brick180x40.png')
         self.delX = 0.5
 

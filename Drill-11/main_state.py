@@ -69,6 +69,12 @@ def update():
             ball.stop()
         if collide(brick, ball):
             ball.stop_brick()
+    if collide(grass, boy):
+        boy.check_grass = True
+
+    if collide(brick, boy):
+        boy.check_brick = True
+        boy.stop()
 
 
 
