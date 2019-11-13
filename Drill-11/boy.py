@@ -144,6 +144,7 @@ class JumpState:
 
 
         print(boy.y, " ", boy.jump_velocity, " ", game_framework.frame_time * boy.jump_velocity+10)
+        boy.x = clamp(25, boy.x, 1600 - 25)
 
     @staticmethod
     def draw(boy):
@@ -164,7 +165,6 @@ class Boy:
 
     def __init__(self):
         self.x, self.y = 1600 // 2, 90
-        # Boy is only once created, so instance image loading is fine
         self.image = load_image('animation_sheet.png')
         self.font = load_font('ENCR10B.TTF', 16)
         self.dir = 1
@@ -173,7 +173,7 @@ class Boy:
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter(self, None)
-        self.jump_velocity = 100
+        self.jump_velocity = 5
 
     def get_bb(self):
         return self.x - 50, self.y - 50, self.x + 50, self.y + 50
