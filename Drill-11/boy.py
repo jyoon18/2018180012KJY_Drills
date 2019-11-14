@@ -137,7 +137,7 @@ class JumpState:
     @staticmethod
     def exit(boy, event):
         pass
-
+    #
     @staticmethod
     def do(boy):
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
