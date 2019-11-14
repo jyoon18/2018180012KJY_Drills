@@ -55,15 +55,6 @@ class IdleState:
         if boy.timer == 0:
             boy.add_event(SLEEP_TIMER)
 
-        if not boy.check_grass and not boy.check_brick:
-            boy.x += boy.velocity * game_framework.frame_time
-            boy.y -= boy.jump_velocity * 0.5
-            boy.jump_velocity += 1
-
-        if boy.y < 90:
-            boy.y = 90
-            boy.jump_velocity = 0
-            boy.cur_state = IdleState
 
     @staticmethod
     def draw(boy):
@@ -98,10 +89,8 @@ class RunState:
         boy.x += boy.velocity * game_framework.frame_time
         boy.x = clamp(25, boy.x, 1600 - 25)
 
-        if not boy.check_grass and not boy.check_brick:
-            boy.x += boy.velocity * game_framework.frame_time
-            boy.y -= boy.jump_velocity * 0.5
-            boy.jump_velocity += 1
+
+
 
     @staticmethod
     def draw(boy):
@@ -158,13 +147,22 @@ class JumpState:
 
         if boy.check_grass and not boy.check_brick:
             boy.x += boy.velocity * game_framework.frame_time
-            boy.y += boy.jump_velocity * 0.5
+            boy.y += boy.jump_velocity * 0.9
             boy.jump_velocity -= 1
+
+        if boy.check_brick and boy.check_grass:
+            boy.x += boy.velocity * game_framework.frame_time
+            boy.y -= boy.jump_velocity * 0.5
+            boy.jump_velocity += 1
+            print("check", boy.y)
+
 
         if boy.y < 90:
             boy.y = 90
             boy.jump_velocity = 0
             boy.cur_state = IdleState
+
+
 
         boy.x = clamp(25, boy.x, 1600 - 25)
     @staticmethod
@@ -178,8 +176,8 @@ class JumpState:
 next_state_table = {
     IdleState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState,
                 SLEEP_TIMER: SleepState, SPACE_DOWN: JumpState},
-    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: IdleState,
-               RIGHT_DOWN: IdleState, SPACE_DOWN: JumpState},
+    RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, LEFT_DOWN: RunState,
+               RIGHT_DOWN: RunState, SPACE_DOWN: JumpState},
 
     SleepState: {LEFT_DOWN: RunState, RIGHT_DOWN: RunState, LEFT_UP: RunState,
                  RIGHT_UP: RunState, SPACE_DOWN: JumpState},
@@ -228,9 +226,10 @@ class Boy:
                 self.delX = main_state.brick.delX
             elif self.x < 900:
                 self.delX = main_state.brick.delX
-
             self.x += main_state.brick.delX
 
+        elif self.check == 0:
+            self.check_brick = False
 
     def draw(self):
         self.cur_state.draw(self)
@@ -245,4 +244,6 @@ class Boy:
     def stop(self):
         self.check = 1
 
+    def reset(self):
+        self.check = 0
 

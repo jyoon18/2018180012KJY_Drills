@@ -75,6 +75,13 @@ def update():
     if collide(brick, boy):
         boy.check_brick = True
         boy.stop()
+    else:
+        #boy.check_brick = False
+        boy.reset()
+
+
+
+    print(boy.check_grass, boy.check_brick)
 
 
 
