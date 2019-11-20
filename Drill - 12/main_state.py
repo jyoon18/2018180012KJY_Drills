@@ -79,7 +79,7 @@ def handle_events():
 
 
 def update():
-    global boy, zombie, ball
+    global boy, zombie, balls
     for game_object in game_world.all_objects():
         game_object.update()
 

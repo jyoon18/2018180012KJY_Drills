@@ -93,6 +93,11 @@ class Zombie:
         self.calculate_current_position()
         return BehaviorTree.SUCCESS
 
+    def move_to_ball(self):
+        self.speed = RUN_SPEED_PPS
+        self.calculate_current_position()
+        return BehaviorTree.SUCCESS
+
 
     def get_next_position(self):
         self.target_x, self.target_y = self.patrol_positions[self.patrol_order % len(self.patrol_positions)]
@@ -119,10 +124,17 @@ class Zombie:
         move_to_player_node = LeafNode("Move to Player", self.move_to_player)
         chase_node = SequenceNode("Chase")
         chase_node.add_children(find_player_node, move_to_player_node)
-#
+
+        find_ball_node = LeafNode("Find Ball", self.find_ball)
+        move_to_ball_node = LeafNode("Move to Ball", self.move_to_target)
+        chase_ball_node = SequenceNode("Chase Ball")
+        chase_node.add_children(find_ball_node, move_to_ball_node)
+
         wander_chase_node = SequenceNode("WanderChase")
         wander_chase_node.add_children(chase_node, wander_node)
-        self.bt = BehaviorTree(wander_chase_node)
+        wander_chase_ball_or_boy_node = SelectorNode("WanderChase Boy or ball")
+        wander_chase_ball_or_boy_node.add_children(wander_chase_node, chase_ball_node)
+        self.bt = BehaviorTree(wander_chase_ball_or_boy_node)
 
     def get_bb(self):
         return self.x - 50, self.y - 50, self.x + 50, self.y + 50
