@@ -77,11 +77,22 @@ class Zombie:
             self.speed = 0
             return BehaviorTree.FAIL
 
+    def find_ball(self):
+        ball = main_state.get_ball()
+        distance = (ball.x - self.x)**2 + (ball.y - self.y)**2
+        if distance < (PIXEL_PER_METER * 10) ** 2:
+            self.dir = math.atan2(ball.y - self.y, ball.x - self.x)
+            return BehaviorTree.SUCCESS
+        else:
+            self.speed = 0
+            return BehaviorTree.FAIL
+
+
     def move_to_player(self):
         self.speed = RUN_SPEED_PPS
         self.calculate_current_position()
         return BehaviorTree.SUCCESS
-        pass
+
 
     def get_next_position(self):
         self.target_x, self.target_y = self.patrol_positions[self.patrol_order % len(self.patrol_positions)]
@@ -108,7 +119,7 @@ class Zombie:
         move_to_player_node = LeafNode("Move to Player", self.move_to_player)
         chase_node = SequenceNode("Chase")
         chase_node.add_children(find_player_node, move_to_player_node)
-
+#
         wander_chase_node = SequenceNode("WanderChase")
         wander_chase_node.add_children(chase_node, wander_node)
         self.bt = BehaviorTree(wander_chase_node)

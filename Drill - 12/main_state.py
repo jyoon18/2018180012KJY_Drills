@@ -36,6 +36,8 @@ def collide(a, b):
 def get_boy():
     return boy
 
+def get_ball():
+    return balls
 
 def enter():
     global boy
@@ -96,7 +98,10 @@ def update():
             game_world.remove_object(ball)
             zombie.zombie_hp += 100
 
-
+    if zombie.zombie_hp > boy.boy_hp:
+        print("zombie win")
+    elif zombie.zombie_hp < boy.boy_hp:
+        print("boy win")
 
 def draw():
     clear_canvas()
